@@ -1,0 +1,103 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+interface Props {
+	posts: CollectionEntry<"blog">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<ul>
+	{
+		posts.map((post) => (
+			<li class="card">
+				{/* 投稿日 */}
+				<time datetime={post.data.publishDate.toISOString()}>
+					{post.data.publishDate
+						.toLocaleDateString("ja-JP", {
+							year: "numeric",
+							month: "2-digit",
+							day: "2-digit",
+						})
+						.replaceAll("/", "-")}
+				</time>
+				{/* 記事タイトル */}
+				<h3 class="title">
+					<a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+				</h3>
+				{/* アイキャッチ画像 */}
+				{post.data.coverImage && (
+					<a href={`/blog/${post.slug}/`}>
+						<Image src={post.data.coverImage} alt={post.data.coverAlt} class="image" />
+					</a>
+				)}
+				<div class="card-body">
+					{/* カテゴリー */}
+					<a href={`/blog/category/${post.data.category.slug}/`} class="category">
+						{post.data.category.name}
+					</a>
+					{/* ディスクリプション */}
+					<p>{post.data.description}</p>
+				</div>
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	ul {
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr;
+		gap: 20px;
+	}
+
+	.card {
+		--clampValue: 350 * 100cqw;
+		container-type: inline-size;
+
+		background-color: var(--sub);
+		border-top: 3px solid var(--accent);
+		padding: 0.7em;
+	}
+
+	.title {
+		font-size: clamp(1.2rem, 20 / var(--clampValue), 1.25rem);
+		margin-bottom: 0.5em;
+
+		a:hover {
+			text-decoration: underline;
+			text-underline-offset: 7px;
+		}
+	}
+
+	.image {
+		float: left;
+		margin-right: 10px;
+		width: 150px;
+		aspect-ratio: 1;
+		object-fit: cover;
+	}
+
+	.card-body {
+		font-size: clamp(0.95rem, 15.5 / var(--clampValue), 1rem);
+	}
+
+	.category {
+		display: inline-block;
+		background-color: var(--base);
+		padding: 0.2em 0.4em;
+		margin-bottom: 0.3em;
+
+		&:hover {
+			background-color: #ccc;
+			color: var(--base);
+			transition: 0.2s;
+		}
+	}
+
+	p {
+		margin-bottom: 0;
+	}
+</style>
