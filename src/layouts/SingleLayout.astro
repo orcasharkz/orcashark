@@ -1,0 +1,21 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+---
+
+<BaseLayout>
+	<div id="single-wrapper">
+		<slot />
+	</div>
+</BaseLayout>
+
+<style>
+	#single-wrapper {
+		display: grid;
+		grid-template-columns: 90%;
+		justify-content: center;
+
+		@media (768px<=width) {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
