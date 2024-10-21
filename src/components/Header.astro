@@ -3,8 +3,8 @@ const currentPath = Astro.url.pathname;
 const Tag = currentPath === "/" || currentPath === "/blog/" ? "h1" : "div";
 
 const navLists: { name: string; slug: string }[] = [
-	{ name: "HOME", slug: "/orcashark/" },
-	{ name: "BLOG", slug: "/orcashark/blog/" },
+	{ name: "HOME", slug: "/" },
+	{ name: "BLOG", slug: "/blog/" },
 ];
 ---
 

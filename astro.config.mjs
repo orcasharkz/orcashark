@@ -3,7 +3,7 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://orcasharkz.github.io",
+	site: "https://orcasharkz.github.io/orcashark",
 	base: "/orcashark",
 	integrations: [sitemap()],
 });
