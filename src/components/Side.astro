@@ -1,7 +1,140 @@
 ---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
 
+// 記事データ取得
+const allPosts = await getCollection("blog");
+// 記事データを新しい順に並べ替え
+const sortedPosts = allPosts.sort((a, b) => {
+	return b.data.publishDate.getTime() - a.data.publishDate.getTime();
+});
+
+const categories: { name: string; slug: string }[] = [
+	{ name: "開発", slug: "development" },
+	{ name: "ブログ", slug: "blog" },
+];
 ---
 
 <aside>
-  side
+	<div class="block">
+		<!-- カテゴリーリスト -->
+		<ul class="category-list">
+			{
+				categories.map((category) => (
+					<li>
+						<a href={`/blog/category/${category.slug}/`}>{category.name}</a>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+
+	<div class="block">
+		<!-- 最新記事4件 -->
+		<div class="side-title">Latest Posts</div>
+		<ul class="post-list">
+			{
+				sortedPosts.slice(0, 4).map((post) => (
+					<li>
+						{/* アイキャッチ画像 */}
+						{post.data.coverImage && (
+							<a href={`/blog/${post.slug}/`}>
+								<Image src={post.data.coverImage} alt={post.data.coverAlt} class="image" />
+							</a>
+						)}
+						<div class="a-list-body">
+							{/* 日時 */}
+							<time datetime={post.data.publishDate.toISOString()}>
+								{post.data.publishDate
+									.toLocaleDateString("ja-JP", {
+										year: "numeric",
+										month: "2-digit",
+										day: "2-digit",
+									})
+									.replaceAll("/", "-")}
+							</time>
+							{/* 記事タイトル */}
+							<div class="title">
+								<a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+							</div>
+						</div>
+					</li>
+				))
+			}
+		</ul>
+	</div>
 </aside>
+
+<style>
+	.side-block {
+		margin-bottom: 1.5em;
+	}
+
+	.side-title {
+		font-size: 1.2rem;
+		font-weight: 700;
+		color: white;
+		border-bottom: 3px solid var(--subLight);
+		padding: 0.5em;
+		margin-bottom: 1em;
+	}
+
+	/* カテゴリー */
+	.category-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+		gap: 15px;
+
+		li {
+			text-align: center;
+			background: linear-gradient(to right bottom, var(--sub), var(--base) 80%);
+
+			a {
+				display: block;
+				padding: 0.5em;
+			}
+
+			&:hover {
+				background: linear-gradient(to right bottom, #0000a3, var(--base) 80%);
+				transition: 0.3s;
+				scale: 1.1;
+			}
+		}
+
+		@media (992px>width) {
+			margin-top: 1.5em;
+		}
+	}
+
+	/* 最新記事 */
+	.post-list {
+		li {
+			display: grid;
+			grid-template-columns: 1fr 2fr;
+			gap: 10px;
+			padding-block: 1.2em;
+
+			.image {
+				width: min(100%, 200px);
+				aspect-ratio: 1;
+				object-fit: cover;
+			}
+
+			.title {
+				font-size: 1.05rem;
+				a:hover {
+					text-decoration: underline;
+					text-underline-offset: 5px;
+				}
+			}
+
+			&:first-child {
+				padding-top: 0;
+			}
+		}
+
+		li + li {
+			border-top: 1px solid var(--subLight);
+		}
+	}
+</style>
