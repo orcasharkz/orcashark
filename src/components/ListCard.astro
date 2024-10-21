@@ -24,17 +24,17 @@ const { posts } = Astro.props;
 				</time>
 				{/* 記事タイトル */}
 				<h3 class="title">
-					<a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+					<a href={`/orcashark/blog/${post.slug}/`}>{post.data.title}</a>
 				</h3>
 				{/* アイキャッチ画像 */}
 				{post.data.coverImage && (
-					<a href={`/blog/${post.slug}/`}>
+					<a href={`/orcashark/blog/${post.slug}/`}>
 						<Image src={post.data.coverImage} alt={post.data.coverAlt} class="image" />
 					</a>
 				)}
 				<div class="card-body">
 					{/* カテゴリー */}
-					<a href={`/blog/category/${post.data.category.slug}/`} class="category">
+					<a href={`/orcashark/blog/category/${post.data.category.slug}/`} class="category">
 						{post.data.category.name}
 					</a>
 					{/* ディスクリプション */}
