@@ -14,8 +14,8 @@ const { posts } = Astro.props;
 			<li class="card">
 				<div class="card-header">
 					{/* 投稿日 */}
-					<time datetime={String(post.data.publishDate)}>
-						{new Date(post.data.publishDate)
+					<time datetime={post.data.publishDate.toISOString()}>
+						{post.data.publishDate
 							.toLocaleDateString("ja-JP", {
 								year: "numeric",
 								month: "2-digit",
@@ -31,7 +31,12 @@ const { posts } = Astro.props;
 				{/* アイキャッチ画像 */}
 				{post.data.coverImage && (
 					<a href={`/blog/${post.slug}/`}>
-						<Image src={post.data.coverImage} alt={post.data.coverAlt} class="image" />
+						<Image
+							src={post.data.coverImage}
+							alt={post.data.coverAlt}
+							loading="eager"
+							class="image"
+						/>
 					</a>
 				)}
 				<div class="card-body">

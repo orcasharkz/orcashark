@@ -2,19 +2,17 @@
 import ColumnLayout from "src/layouts/ColumnLayout.astro";
 import GridCard from "src/components/GridCard.astro";
 import Pager from "src/components/Pager.astro";
-
 import { getCollection } from "astro:content";
 import type { GetStaticPaths } from "astro";
+
 export const getStaticPaths = (async ({ paginate }) => {
 	// 記事データ取得
 	const allPosts = await getCollection("blog");
 	// 記事データを新しい順に並べ替え
 	const sortedPosts = allPosts.sort((a, b) => {
-		const aDate = new Date(a.data.publishDate).getTime();
-		const bDate = new Date(b.data.publishDate).getTime();
-		return bDate - aDate;
+		return b.data.publishDate.getTime() - a.data.publishDate.getTime();
 	});
-	return paginate(sortedPosts, { pageSize: 1 });
+	return paginate(sortedPosts, { pageSize: 6 });
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
