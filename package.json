@@ -19,6 +19,8 @@
 	"license": "ISC",
 	"dependencies": {
 		"@astrojs/check": "^0.9.4",
+		"@astrojs/sitemap": "^3.2.1",
+		"@fontsource-variable/m-plus-1": "^5.1.0",
 		"astro": "^4.16.6",
 		"typescript": "^5.6.3"
 	}
