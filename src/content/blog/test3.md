@@ -1,12 +1,12 @@
 ---
 publishDate: 2024-10-21
-title: テスト用記事。後で書き直すか削除
+title: テスト用記事3。後で書き直すか削除
 description: 記事のディスクリプション。
-coverImage: ./images/earth.jpg
+coverImage: ./images/earth2.jpg
 coverAlt: シャチのアース
 category:
-  name: 開発
-  slug: development
+  name: ブログ
+  slug: blog
 ---
 
 # ダミーテキスト「あのイーハトーヴォの ...」見出し1
