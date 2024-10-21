@@ -1,5 +1,79 @@
 ---
 import SingleLayout from "src/layouts/SingleLayout.astro";
+import ListCard from "src/components/ListCard.astro";
+import { Picture } from "astro:assets";
+import earthImage from "src/assets/earth1.jpg";
+import { getCollection } from "astro:content";
+
+// 記事データ取得
+const allPosts = await getCollection("blog");
+// 記事データを新しい順に並べ替え
+const sortedPosts = allPosts.sort((a, b) => {
+	return b.data.publishDate.getTime() - a.data.publishDate.getTime();
+});
 ---
 
-<SingleLayout> test </SingleLayout>
+<SingleLayout>
+	<main>
+		<div class="block">
+			<Picture
+				src={earthImage}
+				formats={["avif", "webp", "jpeg"]}
+				alt="シャチのアース"
+				loading="eager"
+				class="earth-image"
+			/>
+			<div></div>
+		</div>
+
+		<div class="block">
+			<div class="blog-posts">
+				<h2>BLOG</h2>
+        <!-- 最新記事4件 -->
+				<ListCard posts={sortedPosts.slice(0, 4)} />
+			</div>
+			<div></div>
+		</div>
+	</main>
+</SingleLayout>
+
+<style>
+	.block:nth-of-type(1) {
+		display: grid;
+		column-gap: 1em;
+		padding: 1em;
+		border: 1px solid var(--subLight);
+		border-radius: 5px;
+		@media (1100px<=width) {
+			grid-template-columns: 2fr 1fr;
+		}
+	}
+
+	.block:nth-of-type(2) {
+		@media (992px<=width) {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	.block + .block {
+		margin-top: 1em;
+	}
+
+	.earth-image {
+		display: block;
+	}
+
+	h2 {
+		color: white;
+		font-size: clamp(1.1rem, 17/800 * 100vw, 1.2rem);
+		font-weight: 600;
+	}
+
+	.blog-posts {
+		h2 {
+			font-size: clamp(1.45rem, 26/800 * 100vw, 1.8rem);
+			font-weight: 800;
+		}
+	}
+</style>
