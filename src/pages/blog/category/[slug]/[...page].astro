@@ -1,0 +1,33 @@
+---
+import ColumnLayout from "src/layouts/ColumnLayout.astro";
+import GridCard from "src/components/GridCard.astro";
+import Pager from "src/components/Pager.astro";
+import { getCollection } from "astro:content";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+	// 記事データ取得
+	const allPosts = await getCollection("blog");
+	// 記事データを新しい順に並べ替え
+	const sortedPosts = allPosts.sort((a, b) => {
+		return b.data.publishDate.getTime() - a.data.publishDate.getTime();
+	});
+	// カテゴリーのスラッグを取得して重複しない配列にする
+	const categorySlugs = [...new Set(allPosts.map((post) => post.data.category.slug))];
+
+	return categorySlugs.flatMap((slug) => {
+		const filteredPosts = sortedPosts.filter((post) => post.data.category.slug.includes(slug));
+		return paginate(filteredPosts, {
+			params: { slug },
+			pageSize: 1,
+		});
+	});
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<ColumnLayout>
+	<GridCard posts={page.data} />
+	<Pager page={page} />
+</ColumnLayout>
