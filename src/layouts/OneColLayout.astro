@@ -1,0 +1,19 @@
+---
+
+---
+
+<div id="wrapper">
+	<slot />
+</div>
+
+<style>
+	#wrapper {
+		display: grid;
+		grid-template-columns: 90%;
+		justify-content: center;
+
+		@media (768px<=width) {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
