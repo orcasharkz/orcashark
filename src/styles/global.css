@@ -1,0 +1,57 @@
+:root {
+	--base: #151515;
+	--sub: #393949;
+	--subLight: #4f4f66;
+	--accent: #000091;
+	--fontColor: #bbb;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+	font-size: 1rem;
+	font-weight: 700;
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+button {
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+p {
+	margin-bottom: 1.5em;
+}
+
+a {
+	text-decoration: none;
+	color: white;
+}
+
+body {
+	background-color: var(--base);
+	border-top: 6px solid var(--accent);
+	color: var(--fontColor);
+	font-family: "M PLUS 1 Variable", "Helvetica Neue", "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+		Meiryo, Arial, sans-serif;
+	line-height: 1.7;
+	letter-spacing: 0.02em;
+
+	&:has(.js-nav-open) {
+		overflow: hidden;
+	}
+}

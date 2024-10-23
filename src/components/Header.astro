@@ -1,0 +1,138 @@
+---
+import { linkPath } from "src/lib/linkpath";
+const currentPath = Astro.url.pathname;
+const Tag = currentPath === linkPath.home || linkPath.blog.home ? "h1" : "div";
+const navLists = [
+	{ name: "HOME", slug: linkPath.home },
+	{ name: "BLOG", slug: linkPath.blog.home },
+];
+---
+
+<header>
+	<Tag class="site-name">
+		<a href={linkPath.home}>オルカシャーク</a>
+	</Tag>
+
+	<nav id="header-nav">
+		<ul>
+			{
+				navLists.map((list) => (
+					<li>
+						<a href={list.slug}>{list.name}</a>
+					</li>
+				))
+			}
+		</ul>
+	</nav>
+
+	<button id="burger">
+		<span class="line1"></span>
+		<span class="line2"></span>
+		<span class="line3"></span>
+	</button>
+</header>
+
+<style>
+	header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0.5em;
+
+		@media (768px<=width) {
+			padding: 1em 0;
+		}
+	}
+
+	.site-name {
+		font-size: clamp(1.6rem, 30/800 * 100vw, 2rem);
+		font-weight: 800;
+	}
+
+	#header-nav {
+		@media (992px>width) {
+			position: fixed;
+			top: 0;
+			right: 0;
+			width: min(100dvw, 600px);
+			height: 100dvh;
+			background-color: var(--base);
+			z-index: 1;
+			translate: 100dvw;
+			transition: 0.4s ease-out;
+
+			&.js-nav-open {
+				translate: 0;
+			}
+		}
+	}
+
+	ul {
+		font-size: 1.1rem;
+		font-weight: 600;
+
+		@media (992px>width) {
+			margin-top: 3.6em;
+			width: 90%;
+			margin-inline: auto;
+
+			li a {
+				display: block;
+				padding: 1em;
+				text-align: center;
+			}
+
+			li + li {
+				border-top: 2px solid var(--sub);
+			}
+		}
+
+		@media (992px<=width) {
+			display: flex;
+			align-items: center;
+			gap: 1em;
+
+			li a:hover {
+				text-decoration: underline;
+				text-underline-offset: 5px;
+			}
+		}
+	}
+
+	#burger {
+		width: 50px;
+		height: 50px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		row-gap: 5px;
+		z-index: 1;
+
+		span {
+			background-color: white;
+			height: 4px;
+			width: 70%;
+		}
+
+		&.js-nav-active {
+			.line1 {
+				rotate: 45deg;
+				translate: 0px 9px;
+			}
+
+			.line2 {
+				opacity: 0;
+			}
+
+			.line3 {
+				rotate: -45deg;
+				translate: 0px -9px;
+			}
+		}
+
+		@media (992px<=width) {
+			display: none;
+		}
+	}
+</style>
