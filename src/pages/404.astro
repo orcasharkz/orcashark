@@ -1,0 +1,87 @@
+---
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import OneColLayout from "src/layouts/OneColLayout.astro";
+import ListCard from "src/components/ListCard.astro";
+import { linkPath } from "src/layouts/BaseLayout.astro";
+import { Picture } from "astro:assets";
+import orcaImage from "src/assets/earth3.jpg";
+---
+
+<BaseLayout
+	baseData={{
+		title: "404 Not Found | オルカシャーク",
+		description: "このページは移動または削除されています。404Error page",
+		index: false,
+	}}
+>
+	<OneColLayout>
+		<div class="block">
+			<h1>404 Not Found</h1>
+			<p>アクセスしたページは移動または削除されています。</p>
+			<a href={linkPath.home} class="home">ホームへ戻る</a>
+		</div>
+
+		<div class="block">
+			<div class="blog-posts">
+				<h2>Latest Posts</h2>
+				<ListCard />
+			</div>
+			<Picture
+				src={orcaImage}
+				alt="シャチのアース"
+				formats={["avif", "webp", "jpeg"]}
+				quality="mid"
+				class="orca-image"
+			/>
+		</div>
+	</OneColLayout>
+</BaseLayout>
+
+<style>
+	h1,
+	h2 {
+		color: white;
+		font-size: 1.2rem;
+		margin-bottom: 0.5em;
+	}
+
+	h1 {
+		background-color: var(--sub);
+		color: white;
+		display: inline-block;
+		padding: 0.2em 0.6em;
+		transform: skew(-10deg);
+	}
+
+	.home {
+		display: inline-block;
+		padding: 0.5em 1em;
+		margin-block: 1em;
+		border: 1px solid var(--subLight);
+
+		&:hover {
+			background-color: #ccc;
+			color: var(--base);
+			transition: 0.2s;
+		}
+	}
+
+	p {
+		margin-bottom: 0;
+	}
+
+	.block:nth-of-type(2) {
+		@media (992px<=width) {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1em;
+		}
+	}
+
+	.orca-image {
+		display: block;
+		width: 90%;
+		rotate: 5deg;
+		margin: 1.5em auto;
+	}
+</style>

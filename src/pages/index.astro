@@ -1,16 +1,80 @@
 ---
-
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import OneColLayout from "src/layouts/OneColLayout.astro";
+import ListCard from "src/components/ListCard.astro";
+import { Picture } from "astro:assets";
+import earthImage from "src/assets/earth1.jpg";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+	baseData={{
+		title: "オルカシャーク",
+		description: "ホームディスクリプション",
+		index: true,
+	}}
+>
+	<OneColLayout>
+		<main>
+			<div class="block">
+				<Picture
+					src={earthImage}
+					formats={["avif", "webp", "jpeg"]}
+					alt="シャチのアース"
+					loading="eager"
+					class="earth-image"
+					quality="mid"
+				/>
+				<div></div>
+			</div>
+
+			<div class="block">
+				<div class="blog-posts">
+					<h2>BLOG</h2>
+					<ListCard />
+				</div>
+				<div></div>
+			</div>
+		</main>
+	</OneColLayout>
+</BaseLayout>
+
+<style>
+	.block:nth-of-type(1) {
+		display: grid;
+		column-gap: 1em;
+		padding: 1em;
+		border: 1px solid var(--subLight);
+		border-radius: 5px;
+		@media (1100px<=width) {
+			grid-template-columns: 2fr 1fr;
+		}
+	}
+
+	.block:nth-of-type(2) {
+		@media (992px<=width) {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	.block + .block {
+		margin-top: 1em;
+	}
+
+	.earth-image {
+		display: block;
+	}
+
+	h2 {
+		color: white;
+		font-size: clamp(1.1rem, 17/800 * 100vw, 1.2rem);
+		font-weight: 600;
+	}
+
+	.blog-posts {
+		h2 {
+			font-size: clamp(1.45rem, 26/800 * 100vw, 1.8rem);
+			font-weight: 800;
+		}
+	}
+</style>
