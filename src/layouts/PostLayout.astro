@@ -1,0 +1,31 @@
+---
+
+---
+
+<div class="post-block">
+	<div class="block-inner">
+		<slot />
+	</div>
+</div>
+
+<style>
+	.post-block {
+		--clampValue: 500 * 100cqw;
+		container-type: inline-size;
+	}
+
+	.block-inner {
+		background-color: #f3f3f3;
+		color: #292929;
+		padding: clamp(15px, 30 / var(--clampValue), 55px);
+
+		@media (768px>width) {
+			margin-inline: calc(50% - 50vw);
+		}
+
+		@media (768px<=width) {
+			border: 4px solid var(--subLight);
+			border-radius: 5px;
+		}
+	}
+</style>

@@ -1,0 +1,139 @@
+---
+// ----- 個別記事ページ -----
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import TwoColLayout from "src/layouts/TwoColLayout.astro";
+import PostLayout from "src/layouts/PostLayout.astro";
+import { linkPath } from "src/lib/linkpath";
+
+import { getCollection } from "astro:content";
+import type { GetStaticPaths } from "astro";
+export const getStaticPaths = (async () => {
+	const allPosts = await getCollection("blog");
+	return allPosts.map((post) => ({
+		params: { slug: post.slug },
+		props: { post },
+	}));
+}) satisfies GetStaticPaths;
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<BaseLayout baseData={{ title: `${post.data.title} | オルカシャーク` }}>
+	<TwoColLayout>
+		<PostLayout>
+			<main>
+				<article>
+					<header>
+						{/* 投稿日時 */}
+						<time datetime={post.data.publishDate.toISOString()}>
+							{
+								post.data.publishDate
+									.toLocaleDateString("ja-JP", {
+										year: "numeric",
+										month: "2-digit",
+										day: "2-digit",
+									})
+									.replaceAll("/", "-")
+							}
+						</time>
+						{/* 記事タイトル */}
+						<h1 class="title">
+							{post.data.title}
+						</h1>
+						{/* カテゴリー */}
+						<a href={`${linkPath.blog.category + post.data.category.slug}/`} class="category">
+							{post.data.category.name}
+						</a>
+					</header>
+
+					<div class="content">
+						{/* 記事本文 */}
+						<Content />
+					</div>
+				</article>
+			</main>
+		</PostLayout>
+	</TwoColLayout>
+</BaseLayout>
+
+<style>
+	header {
+		margin-bottom: 1em;
+
+		.category {
+			margin: 0.5em;
+			display: inline-block;
+			padding: 0.2em 0.4em;
+			background-color: #ccc;
+			color: var(--base);
+
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+	}
+
+	.content {
+		text-align: justify;
+		word-break: break-all;
+
+		a {
+			color: #0f5b99;
+
+			&:hover {
+				text-decoration: underline;
+				text-underline-offset: 5px;
+			}
+		}
+
+		:is(h1, h2, h3, h4, h5, h6) {
+			margin-bottom: 1em;
+			padding: 0.5em;
+		}
+
+		h2 {
+			border-bottom: 4px solid var(--sub);
+			position: relative;
+			font-size: 1.25rem;
+
+			&::after {
+				position: absolute;
+				content: "";
+				display: block;
+				border-bottom: 4px solid var(--accent);
+				bottom: -4px;
+				left: 0;
+				width: 30%;
+			}
+		}
+
+		h3 {
+			background-color: #b3e2ff;
+			font-size: 1.2rem;
+		}
+
+		h4 {
+			background-color: #d5d5df;
+			font-size: 1.15rem;
+		}
+
+		h5 {
+			border-bottom: 2px solid var(--sub);
+			font-size: 1.1rem;
+		}
+
+		@container (800px<=width) {
+			font-size: 1.05rem;
+		}
+	}
+
+	:is(header, .content) {
+		h1 {
+			background-color: var(--base);
+			border-top: 4px solid var(--accent);
+			font-size: clamp(1.2rem, 20 / var(--clampValue), 1.3rem);
+			color: white;
+			padding: 0.5em;
+		}
+	}
+</style>
