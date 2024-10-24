@@ -5,12 +5,33 @@ import MetaTag from "src/components/MetaTag.astro";
 import Header from "src/components/Header.astro";
 import Footer from "src/components/Footer.astro";
 
+import type { GetImageResult } from "astro";
 interface Props {
 	baseData: {
 		title: string;
+		description: string;
+		image?: GetImageResult | null;
+		index: boolean;
 	};
 }
 const { baseData } = Astro.props;
+
+interface LinkPath {
+	home: string;
+	blog: {
+		home: string;
+		article: string;
+		category: string;
+	};
+}
+export const linkPath: LinkPath = {
+	home: "/orcashark/",
+	blog: {
+		home: "/orcashark/blog/",
+		article: "/orcashark/blog/",
+		category: "/orcashark/blog/category/",
+	},
+};
 ---
 
 <!doctype html>

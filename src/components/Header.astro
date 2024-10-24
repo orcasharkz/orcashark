@@ -1,5 +1,5 @@
 ---
-import { linkPath } from "src/lib/linkpath";
+import { linkPath } from "src/layouts/BaseLayout.astro";
 const currentPath = Astro.url.pathname;
 const Tag = currentPath === linkPath.home || linkPath.blog.home ? "h1" : "div";
 const navLists = [

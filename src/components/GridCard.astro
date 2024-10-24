@@ -1,5 +1,5 @@
 ---
-import { linkPath } from "src/lib/linkpath";
+import { linkPath } from "src/layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 interface Props {
@@ -58,7 +58,7 @@ const { posts } = Astro.props;
 		gap: clamp(18px, 21/800 * 100vw, 24px);
 
 		@media (768px<=width) {
-			grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+			grid-template-columns: repeat(auto-fill, minmax(345px, 1fr));
 		}
 	}
 
