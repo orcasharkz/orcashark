@@ -3,7 +3,8 @@
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import TwoColLayout from "src/layouts/TwoColLayout.astro";
 import PostLayout from "src/layouts/PostLayout.astro";
-import { linkPath } from "src/lib/linkpath";
+import { linkPath } from "src/layouts/BaseLayout.astro";
+import { getImage } from "astro:assets";
 
 import { getCollection } from "astro:content";
 import type { GetStaticPaths } from "astro";
@@ -18,7 +19,20 @@ const { post } = Astro.props;
 const { Content } = await post.render();
 ---
 
-<BaseLayout baseData={{ title: `${post.data.title} | オルカシャーク` }}>
+<BaseLayout
+	baseData={{
+		title: `${post.data.title} | オルカシャーク`,
+		description: post.data.description,
+		image:
+			post.data.coverImage &&
+			(await getImage({
+				src: post.data.coverImage,
+				format: "webp",
+				quality: "low",
+			})),
+		index: true,
+	}}
+>
 	<TwoColLayout>
 		<PostLayout>
 			<main>

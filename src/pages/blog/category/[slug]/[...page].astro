@@ -3,6 +3,7 @@
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import TwoColLayout from "src/layouts/TwoColLayout.astro";
 import GridCard from "src/components/GridCard.astro";
+import Pager from "src/components/Pager.astro";
 
 import { getCollection } from "astro:content";
 import type { GetStaticPaths } from "astro";
@@ -13,10 +14,10 @@ export const getStaticPaths = (async ({ paginate }) => {
 	});
 	const categorySlugs = [...new Set(allPosts.map((post) => post.data.category.slug))];
 	return categorySlugs.flatMap((slug) => {
-		const filteredPosts = sortedPosts.filter((post) => post.data.category.slug.includes(slug));
+		const filteredPosts = sortedPosts.filter((post) => post.data.category.slug === slug);
 		return paginate(filteredPosts, {
 			params: { slug },
-			pageSize: 1,
+			pageSize: 6,
 		});
 	});
 }) satisfies GetStaticPaths;
@@ -24,13 +25,18 @@ const { page } = Astro.props;
 ---
 
 <BaseLayout
-	baseData={{ title: `${page.data[0].data.category.name} | カテゴリー | オルカシャーク` }}
+	baseData={{
+		title: `${page.data[0].data.category.name} | カテゴリー | オルカシャーク`,
+		description: `${page.data[0].data.category.name}カテゴリーの記事一覧ページです。`,
+		index: page.currentPage === 1 ? true : false,
+	}}
 >
 	<TwoColLayout>
 		<main>
 			<h1>{`「${page.data[0].data.category.name}」カテゴリーの記事一覧`}</h1>
 			<GridCard posts={page.data} />
 		</main>
+		<Pager page={page} />
 	</TwoColLayout>
 </BaseLayout>
 
