@@ -1,0 +1,27 @@
+---
+// ----- ブログホーム -----
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import TwoColLayout from "src/layouts/TwoColLayout.astro";
+import GridCard from "src/components/GridCard.astro";
+
+import { getCollection } from "astro:content";
+import type { GetStaticPaths } from "astro";
+export const getStaticPaths = (async ({ paginate }) => {
+	// コンテンツコレクション（ブログ）から記事データ取得
+	const allPosts = await getCollection("blog");
+	// 最新順に並べ替え
+	const sortedPosts = allPosts.sort((a, b) => {
+		return b.data.publishDate.getTime() - a.data.publishDate.getTime();
+	});
+	return paginate(sortedPosts, { pageSize: 1 });
+}) satisfies GetStaticPaths;
+const { page } = Astro.props;
+---
+
+<BaseLayout baseData={{ title: "BLOG | オルカシャーク" }}>
+	<TwoColLayout>
+		<main>
+			<GridCard posts={page.data} />
+		</main>
+	</TwoColLayout>
+</BaseLayout>
