@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://orcasharkz.github.io/orcashark/sitemap-index.xml
