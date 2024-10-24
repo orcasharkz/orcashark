@@ -1,0 +1,12 @@
+---
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import type { ComponentProps } from "astro/types";
+
+interface Props {
+	metaData: ComponentProps<typeof BaseLayout>;
+}
+const { metaData } = Astro.props;
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
