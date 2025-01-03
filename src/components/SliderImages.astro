@@ -1,0 +1,55 @@
+---
+import { ImageSlider } from "@/components/ImageSlider";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+// 画像 -----
+import earth from "@/assets/images/earth.jpg";
+import orca from "@/assets/images/orca.jpg";
+import wolf from "@/assets/images/wolf.jpg";
+import tiger from "@/assets/images/tiger.jpg";
+
+type SliderImage = {
+  src: ImageMetadata;
+  alt: string;
+};
+
+const images: SliderImage[] = [
+  { src: earth, alt: "シャチのアース" },
+  { src: wolf, alt: "シンリンオオカミのヒカルとゲンキ" },
+  { src: orca, alt: "シャチのリンとステラとアース" },
+  { src: tiger, alt: "アムールトラのオク" },
+];
+const sliderImages: SliderImage[] = [images[images.length - 1], ...images, images[0]];
+const totalImages: number = sliderImages.length;
+---
+
+<ImageSlider totalImages={totalImages} client:idle>
+  <ul>
+    {
+      sliderImages.map((image) => (
+        <li>
+          <Image
+            src={image.src}
+            alt={image.alt}
+            widths={[700, 1100, image.src.width]}
+            sizes={`(max-width: 1200px) 100vw, ${image.src.width}px`}
+            loading="eager"
+            style={{ display: "block" }}
+          />
+        </li>
+      ))
+    }
+  </ul>
+</ImageSlider>
+
+<style>
+  ul {
+    display: flex;
+    align-items: center;
+  }
+
+  li {
+    min-width: 100%;
+  }
+</style>
