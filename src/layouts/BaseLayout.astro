@@ -1,0 +1,35 @@
+---
+import "@fontsource-variable/m-plus-1";
+import "@/styles/global.css";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+
+type Props = {
+  metadata: Readonly<{
+    title: string;
+  }>;
+};
+
+const { metadata } = Astro.props;
+const prodURL = new URL(import.meta.env.BASE_URL, Astro.site);
+const canonicalURL = new URL(Astro.url.pathname, prodURL);
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{metadata.title}</title>
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" href="/orcashark/favicon.ico" />
+    <link rel="apple-touch-icon" href="/orcashark/apple-icon.png" />
+  </head>
+  <body>
+    <Header />
+    <div class="container">
+      <slot />
+    </div>
+    <Footer />
+  </body>
+</html>
