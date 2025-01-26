@@ -1,0 +1,60 @@
+:root {
+  --base: #151515;
+  --white-base: #f3f3f3;
+  --sub: #393949;
+  --light-sub: #4f4f66;
+  --accent: #000091;
+  --light-gray: #cccccc;
+  --black: #292929;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+:where(ul, ol) {
+  list-style: none;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+body {
+  font-family: "M PLUS 1 Variable", sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: var(--base);
+  border-top: 6px solid var(--accent);
+  color: var(--light-gray);
+}
+
+body:has(.js_open) {
+  overflow: hidden;
+}
+
+.container {
+  width: min(93%, 1300px);
+  margin-inline: auto;
+}
