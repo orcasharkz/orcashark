@@ -1,0 +1,41 @@
+---
+import { getPath } from "@/lib/path";
+import Navigation from "./Navigation.astro";
+
+const pathName = Astro.url.pathname;
+const homePath = getPath().home;
+const Tag = pathName === homePath ? "h1" : "div";
+---
+
+<header>
+  <Tag class="site_name">
+    <a href={homePath}>オルカシャーク</a>
+  </Tag>
+  <Navigation />
+</header>
+
+<style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em;
+  }
+
+  .site_name {
+    font-size: clamp(1.5rem, 28/800 * 100vw, 1.9rem);
+    font-weight: 800;
+  }
+
+  @media (min-width: 768px) {
+    header {
+      padding: 0.65em;
+    }
+  }
+
+  @media (min-width: 992px) {
+    header {
+      padding: 1em;
+    }
+  }
+</style>

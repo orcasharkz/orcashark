@@ -1,0 +1,126 @@
+---
+import { navItems } from "@/lib/navItems";
+---
+
+<>
+  <nav id="header_nav">
+    <ul>
+      {
+        navItems.map((item) => (
+          <li>
+            <a href={item.href}>{item.name}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <button id="burger">
+    <span class="line1"></span>
+    <span class="line2"></span>
+    <span class="line3"></span>
+  </button>
+</>
+
+<script>
+  import "@/scripts/Navigation";
+</script>
+
+<style>
+  li {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  #burger {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 5px;
+    position: relative;
+    z-index: 1;
+  }
+
+  #burger span {
+    background-color: white;
+    height: 4px;
+    width: 70%;
+  }
+
+  #burger.js_active .line1 {
+    rotate: 45deg;
+    translate: 0px 9px;
+  }
+
+  #burger.js_active .line2 {
+    opacity: 0;
+  }
+
+  #burger.js_active .line3 {
+    rotate: -45deg;
+    translate: 0px -9px;
+  }
+
+  @media (max-width: 991.9px) {
+    #header_nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100dvw;
+      height: 100dvh;
+      background-color: var(--base);
+      translate: 100dvw;
+      z-index: 1;
+    }
+
+    #header_nav.js_open {
+      translate: 0;
+      transition: all 0.4s;
+    }
+
+    ul {
+      margin-top: 4.5em;
+      width: 93%;
+      margin-inline: auto;
+    }
+
+    li + li {
+      border-top: 2px solid var(--sub);
+    }
+
+    li a {
+      display: block;
+      padding: 1em;
+      text-align: center;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 991.9px) {
+    #header_nav {
+      width: 70dvw;
+    }
+
+    #burger {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  @media (min-width: 992px) {
+    ul {
+      display: flex;
+      column-gap: 1em;
+    }
+
+    li a:hover {
+      text-decoration: underline;
+      text-underline-offset: 5px;
+    }
+
+    #burger {
+      display: none;
+    }
+  }
+</style>
