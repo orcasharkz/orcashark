@@ -1,15 +1,9 @@
 ---
-
+import SliderImages from "@/components/SliderImages.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>Astro</h1>
-</body>
-</html>
+<BaseLayout metadata={{title: "オルカシャーク"}}>
+  <SliderImages />
+  HOME
+</BaseLayout>

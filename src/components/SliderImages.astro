@@ -1,0 +1,54 @@
+---
+import { Image } from "astro:assets";
+import { ImageSlider } from "./ImageSlider";
+
+const images: { src: string; alt: string }[] = [
+  { src: "https://tiger.orcashark.com/slider/earth.jpg", alt: "シャチのアース" },
+  {
+    src: "https://tiger.orcashark.com/slider/wolf.jpg",
+    alt: "シンリンオオカミのヒカルとゲンキ",
+  },
+  {
+    src: "https://tiger.orcashark.com/slider/orca.jpg",
+    alt: "シャチのリンとステラとアース",
+  },
+  { src: "https://tiger.orcashark.com/slider/tiger.jpg", alt: "アムールトラのオク" },
+];
+const sliderImages = [images[images.length - 1], ...images, images[0]];
+const totalImages: number = sliderImages.length;
+---
+
+<ImageSlider totalImages={totalImages} client:idle>
+  <ul>
+    {
+      sliderImages.map((image) => (
+        <li>
+          <Image
+            src={image.src}
+            alt={image.alt}
+            width={2500}
+            height={970}
+            widths={[700, 1100, 2500]}
+            sizes={"(max-width: 1200px) 100vw, 2500px"}
+            loading={"eager"}
+          />
+        </li>
+      ))
+    }
+  </ul>
+</ImageSlider>
+
+<style>
+  ul {
+    display: flex;
+    align-items: center;
+  }
+
+  li {
+    min-width: 100%;
+  }
+
+  img {
+    display: block;
+  }
+</style>
