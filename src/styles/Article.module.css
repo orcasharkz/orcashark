@@ -1,0 +1,83 @@
+.header {
+  margin-bottom: 1.5em;
+  background-color: var(--base);
+  border-top: 4px solid var(--accent);
+  padding: 0.7em;
+}
+
+.title {
+  color: white;
+  font-size: 1.1rem;
+}
+
+.category {
+  margin-top: 0.7em;
+}
+
+.category a {
+  display: inline-block;
+  background-color: var(--sub);
+  padding: 0.2em 0.5em;
+  font-size: 1rem;
+}
+
+.category a:hover {
+  background-color: var(--light-sub);
+  transition: all 0.3s;
+}
+
+/* 本文 */
+.body p {
+  margin-bottom: 1.5em;
+  line-height: 1.65;
+}
+
+.body a {
+  color: #0f5b99;
+}
+
+.body a:hover {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.body :is(h1, h2, h3, h4, h5, h6) {
+  margin-bottom: 1em;
+  padding: 0.7em;
+  font-size: 1.1rem;
+}
+
+.body h1 {
+  background-color: var(--base);
+  border-top: 4px solid var(--accent);
+  color: white;
+}
+
+.body h2 {
+  border-bottom: 4px solid var(--sub);
+  position: relative;
+  padding-inline: 0;
+}
+
+.body h2::after {
+  position: absolute;
+  content: "";
+  display: block;
+  border-bottom: 4px solid var(--accent);
+  bottom: -4px;
+  left: 0;
+  width: 30%;
+}
+
+.body h3 {
+  background-color: #b3e2ff;
+}
+
+.body h4 {
+  background-color: #d5d5df;
+}
+
+.body h5 {
+  border-bottom: 3px solid var(--sub);
+  padding-inline: 0;
+}

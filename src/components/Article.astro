@@ -1,0 +1,49 @@
+---
+import { formatDate } from "@/lib/format";
+import { getPath } from "@/lib/path";
+import styles from "@/styles/Article.module.css";
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+  post: CollectionEntry<"blog">;
+};
+
+const { post } = Astro.props;
+let body = post.data.body;
+
+// 画像最適化
+const imageTag = new RegExp(
+  '<img src="https://tiger.orcashark.com/.+.(jpg|jpeg)" alt=".+">',
+  "gi"
+);
+const images = body.match(imageTag);
+if (images) {
+  for (let index = 0; index < images.length; index++) {
+    const imageData = images[index].split('"');
+    const params = "w=1200,q=70";
+    body = body.replace(
+      images[index],
+      `<img src="https://orcashark.com/cdn-cgi/image/${params}/${imageData[1]}" alt="${imageData[3]}" width="1200" height="900" loading="lazy" decoding="async">`
+    );
+  }
+}
+---
+
+<article>
+  {/* 日付 */}
+  <time datetime={formatDate(post.data._sys.createdAt)}>
+    {formatDate(post.data._sys.createdAt)}
+  </time>
+  <header class={styles.header}>
+    {/* タイトル */}
+    <h1 class={styles.title}>{post.data.title}</h1>
+    {/* カテゴリー */}
+    <div class={styles.category}>
+      <a href={getPath(post.data.category.slug).blog.category}>
+        {post.data.category.name}
+      </a>
+    </div>
+  </header>
+  {/* 本文 */}
+  <div set:html={body} id="content" class={styles.body} />
+</article>
