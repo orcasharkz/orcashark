@@ -1,0 +1,44 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Sidebar from "@/components/Sidebar.astro";
+import type { ComponentProps } from "astro/types";
+
+type Props = ComponentProps<typeof BaseLayout>;
+
+const { metadata } = Astro.props;
+---
+
+<BaseLayout metadata={metadata}>
+  <div class="wrapper">
+    <div class="main_column">
+      <slot />
+    </div>
+    <div class="side_column">
+      <Sidebar />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .wrapper {
+    display: grid;
+    gap: 1.5em;
+  }
+
+  @media (min-width: 992px) {
+    .wrapper {
+      grid-template-columns: 1fr 2fr;
+    }
+
+    .main_column {
+      order: 1;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .wrapper {
+      grid-template-columns: 27% 66%;
+      justify-content: space-around;
+    }
+  }
+</style>
