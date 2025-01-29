@@ -1,0 +1,21 @@
+---
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import SliderImages from "@/components/SliderImages.astro";
+import PostCard from "@/components/PostCard.astro";
+import { getCollection } from "astro:content";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const allPosts = await getCollection("blog");
+  return paginate(allPosts, { pageSize: 6 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<BlogLayout metadata={{ title: "オルカシャーク" }}>
+  {page.currentPage === 1 && <SliderImages slot="slider" />}
+  <main>
+    <PostCard posts={page.data} />
+  </main>
+</BlogLayout>

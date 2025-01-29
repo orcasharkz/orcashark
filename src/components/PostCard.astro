@@ -1,0 +1,97 @@
+---
+import { formatDate } from "@/lib/format";
+import { getPath } from "@/lib/path";
+import { CloudflareImage } from "@/components/CloudflareImage";
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+  posts: CollectionEntry<"blog">[];
+};
+
+const { posts } = Astro.props;
+---
+
+<ul>
+  {
+    posts.map((post) => (
+      <li class="card">
+        <a href={getPath(post.id).blog.post}>
+          {/* 日付 */}
+          <time datetime={formatDate(post.data._sys.createdAt)}>
+            {formatDate(post.data._sys.createdAt)}
+          </time>
+          {/* タイトル */}
+          <h2 class="title">{post.data.title}</h2>
+          {/* アイキャッチ画像 */}
+          <CloudflareImage
+            src={
+              post.data.image.src
+                ? post.data.image.src
+                : "https://tiger.orcashark.com/noimage.jpg"
+            }
+            alt={post.data.image.alt ? post.data.image.alt : "シャチのアース"}
+            width={1000}
+            height={750}
+            quality={70}
+            fit={"cover"}
+          />
+          {/* ディスクリプション */}
+          <p>{post.data.description}</p>
+          {/* カテゴリー */}
+          <div class="category">{post.data.category.name}</div>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  ul {
+    display: grid;
+    gap: 1em;
+  }
+
+  .card {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 5;
+    border: 2px solid var(--sub);
+    border-radius: 4px;
+  }
+
+  .card:hover {
+    border: 2px solid var(--light-gray);
+    transition: all 0.3s;
+  }
+
+  .card a {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 5;
+    row-gap: 0.8em;
+    color: var(--light-gray);
+    padding: 1em;
+  }
+
+  time {
+    line-height: 1;
+  }
+
+  .title {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .category {
+    background-color: var(--sub);
+    padding: 0.5em;
+    color: white;
+  }
+
+  @media (min-width: 500px) {
+    ul {
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+  }
+</style>

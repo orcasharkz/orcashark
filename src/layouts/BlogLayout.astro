@@ -9,6 +9,7 @@ const { metadata } = Astro.props;
 ---
 
 <BaseLayout metadata={metadata}>
+  <slot name="slider" />
   <div class="wrapper">
     <div class="main_column">
       <slot />
