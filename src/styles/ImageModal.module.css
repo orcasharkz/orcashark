@@ -1,0 +1,96 @@
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100dvw;
+  height: 100dvh;
+  background-color: rgba(21, 21, 21, 0.8);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: var(--base);
+  border-bottom: 2px solid var(--sub);
+}
+
+.header_inner {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  max-width: 1300px;
+  margin-inline: auto;
+}
+
+.count {
+  color: var(--light-gray);
+  padding: 8px;
+}
+
+.prev,
+.next {
+  width: 50px;
+  height: 50px;
+}
+
+.svg {
+  vertical-align: middle;
+}
+
+.none {
+  fill: #666666;
+  cursor: default;
+}
+
+.close {
+  width: 50px;
+  height: 50px;
+  margin-left: auto;
+}
+
+.line1,
+.line2 {
+  display: block;
+  background-color: white;
+  height: 4px;
+  width: 60%;
+}
+
+.line1 {
+  rotate: 45deg;
+  translate: 10px 3px;
+}
+
+.line2 {
+  rotate: -45deg;
+  translate: 10px -1px;
+}
+
+.image_block {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-height: 800px;
+  display: block;
+  margin: auto;
+  animation-name: image-animation;
+  animation-duration: 0.4s;
+}
+
+@keyframes image-animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

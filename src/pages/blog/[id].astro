@@ -1,6 +1,7 @@
 ---
 import BlogLayout from "@/layouts/BlogLayout.astro";
 import Article from "@/components/Article.astro";
+import { ImageModal } from "@/components/ImageModal";
 import { getCollection } from "astro:content";
 import type { GetStaticPaths } from "astro";
 
@@ -27,6 +28,8 @@ const { post } = Astro.props;
       <Article post={post} />
     </main>
   </div>
+  {/* 画像モーダル */}
+  <ImageModal client:idle />
 </BlogLayout>
 
 <style>

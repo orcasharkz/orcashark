@@ -81,3 +81,7 @@
   border-bottom: 3px solid var(--sub);
   padding-inline: 0;
 }
+
+.body img {
+  cursor: pointer;
+}
